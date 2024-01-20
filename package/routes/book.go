@@ -31,11 +31,14 @@ func (bc *bookRoutes) initBookRoutes(e *echo.Echo){
 
 	book.GET("/ping", Pong)
 
-	// Initializing http methods - routing endpoints and their handlers
+	// Initializing http methods of Book - routing endpoints and their handlers
 	book.POST("/book", bc.bookCtr.CreateBook)
 	book.GET("/book", bc.bookCtr.GetBooks)
 	book.PUT("/book/:bookID", bc.bookCtr.UpdateBook)
 	book.DELETE("/book/:bookID", bc.bookCtr.DeleteBook)
+
+	
+	// Initializing http methods of Author - routing endpoints and their handlers
 	book.POST("/author", bc.authorCtr.CreateAuthor)
 	book.GET("/author", bc.authorCtr.GetAuthors)
 	book.PUT("/author/:authorID", bc.authorCtr.UpdateAuthor)

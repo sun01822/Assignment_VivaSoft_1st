@@ -2,11 +2,16 @@ module Assignment_Vivasoft
 
 go 1.21.5
 
-require github.com/labstack/echo/v4 v4.11.4
+require (
+	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
+	github.com/labstack/echo/v4 v4.11.4
+	github.com/spf13/viper v1.18.2
+	gorm.io/driver/mysql v1.5.2
+	gorm.io/gorm v1.25.5
+)
 
 require (
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
-	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
@@ -23,7 +28,6 @@ require (
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/spf13/viper v1.18.2 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
@@ -36,6 +40,4 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/driver/mysql v1.5.2 // indirect
-	gorm.io/gorm v1.25.5 // indirect
 )
