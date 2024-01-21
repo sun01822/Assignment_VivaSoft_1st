@@ -5,6 +5,7 @@ import (
 	"Assignment_Vivasoft/package/models"
 	"errors"
 	"gorm.io/gorm"
+	"Assignment_Vivasoft/package/utils"
 	"fmt"
 )
 
@@ -22,9 +23,8 @@ func (repo *userRepo) LoginUser(user *models.UserDetails) error {
 	}
 	
 	// Compare the stored hashed password, with the hashed version of the password that was received
-	if user.Password != existingUser.Password {
-		fmt.Println("Password is not correct")
-		return errors.New("password is not correct")
+	if err := utils.ComparePassword(existingUser.Password, user.Password); err != nil {
+		return err
 	}
 	// Passwords match, authentication successful
 	return nil
@@ -60,8 +60,10 @@ func (repo *userRepo) CreateUser(user *models.UserDetails) error {
 		return errors.New("user with the same userName already exists")
 	}
 
+	fmt.Println("Resuested User: ", user)
 	// hashedPassword
-	// user.Password = utils.HashPassword(user.Password)
+	user.Password = utils.HashPassword(user.Password)
+	fmt.Println("After Hashing: ", user)
 
 	err2 := repo.db.Create(user).Error
 	if err2 != nil {

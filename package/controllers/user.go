@@ -153,9 +153,8 @@ func (controller *UserController) LoginUser(e echo.Context) error {
 	if err := controller.UserSvc.LoginUser(User); err != nil {
 		return e.JSON(http.StatusInternalServerError, err.Error())
 	}
-	fmt.Println("Login Successful")
 	now := time.Now().UTC()
-	ttl := time.Minute * 15
+	ttl := time.Minute * 1
 	claims := jwt.StandardClaims{
 		ExpiresAt: now.Add(ttl).Unix(),
 		IssuedAt:  now.Unix(),
@@ -166,5 +165,7 @@ func (controller *UserController) LoginUser(e echo.Context) error {
 		fmt.Println(err.Error())
 		return e.JSON(http.StatusInternalServerError, "error generating token")
 	}
-	return e.JSON(http.StatusOK, token)
+	fmt.Println("Login successfully" + " " + requestUser.UserName + " " + "at" + " " + time.Now().String())
+	fmt.Println("Now you can Add, Update, Delete Book using the JWT for 1 minute. After 1 minute you need to relogin to get the JWT")
+	return e.JSON(http.StatusOK,token)
 }

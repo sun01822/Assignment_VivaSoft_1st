@@ -36,9 +36,9 @@ func (bc *bookRoutes) initBookRoutes(e *echo.Echo){
 
 	// Initializing http methods of Book - routing endpoints and their handlers
 	book.POST("/book", bc.bookCtr.CreateBook, middlewares.Auth)
-	book.GET("/book", bc.bookCtr.GetBooks)
-	book.PUT("/book/:bookID", bc.bookCtr.UpdateBook)
-	book.DELETE("/book/:bookID", bc.bookCtr.DeleteBook)
+	book.GET("/book", bc.bookCtr.GetBooks)  // no need to authenticate
+	book.PUT("/book/:bookID", bc.bookCtr.UpdateBook, middlewares.Auth)
+	book.DELETE("/book/:bookID", bc.bookCtr.DeleteBook, middlewares.Auth)
 
 	
 	// Initializing http methods of Author - routing endpoints and their handlers
