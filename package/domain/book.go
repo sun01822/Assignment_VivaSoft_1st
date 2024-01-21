@@ -47,6 +47,7 @@ type IUserRepo interface{
 	CreateUser(user *models.UserDetails) error
 	UpdateUser(user *models.UserDetails) error
 	DeleteUser(*gorm.Model) error
+	LoginUser(user *models.UserDetails) error
 }
 
 // for service operation (response to controller || call from controller)
@@ -55,4 +56,5 @@ type IUserService interface{
 	CreateUser(user *models.UserDetails) error
 	UpdateUser(user *models.UserDetails) error
 	DeleteUser(*gorm.Model) error
+	LoginUser(user *models.UserDetails) error
 }

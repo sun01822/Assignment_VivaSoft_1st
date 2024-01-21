@@ -43,7 +43,7 @@ func (service *userService) GetUsers(model *gorm.Model) ([]types.UserRequest, er
 // CreateBook implements domain.IBookService.
 func (service *userService) CreateUser(user *models.UserDetails) error {
 	if err := service.repo.CreateUser(user); err != nil {
-		return errors.New("userDetail is not created")
+		return err
 	}
 	return nil
 }
@@ -63,4 +63,13 @@ func (service *userService) DeleteUser(model *gorm.Model) error {
 	}
 	return nil
 }
+
+// LoginUser implements domain.IBookService.
+func (service *userService) LoginUser(user *models.UserDetails) error {
+	if err := service.repo.LoginUser(user); err != nil {
+		return errors.New("Log in Failed")
+	}
+	return nil
+}
+
 

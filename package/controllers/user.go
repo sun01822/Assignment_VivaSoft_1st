@@ -4,9 +4,12 @@ import (
 	"Assignment_Vivasoft/package/domain"
 	"Assignment_Vivasoft/package/models"
 	"Assignment_Vivasoft/package/types"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
@@ -131,4 +134,37 @@ func (controller *UserController) DeleteUser(e echo.Context) error {
 		return e.JSON(http.StatusInternalServerError, err.Error())
 	}
 	return e.JSON(http.StatusOK, "UserDetail is deleted successfully")
+}
+
+
+// Log in User
+func (controller *UserController) LoginUser(e echo.Context) error {
+	requestUser := &types.UserLoginRequest{}
+	if err := e.Bind(requestUser); err != nil {
+		return e.JSON(http.StatusBadRequest, err.Error())
+	}
+	if err := requestUser.Validate(); err != nil {
+		return e.JSON(http.StatusBadRequest, err.Error())
+	}
+	User := &models.UserDetails{
+		UserName:    requestUser.UserName,
+		Password:    requestUser.Password,
+	}
+	if err := controller.UserSvc.LoginUser(User); err != nil {
+		return e.JSON(http.StatusInternalServerError, err.Error())
+	}
+	fmt.Println("Login Successful")
+	now := time.Now().UTC()
+	ttl := time.Minute * 15
+	claims := jwt.StandardClaims{
+		ExpiresAt: now.Add(ttl).Unix(),
+		IssuedAt:  now.Unix(),
+		NotBefore: now.Unix(),
+	}
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte("my-secret-key"))
+	if err != nil {
+		fmt.Println(err.Error())
+		return e.JSON(http.StatusInternalServerError, "error generating token")
+	}
+	return e.JSON(http.StatusOK, token)
 }

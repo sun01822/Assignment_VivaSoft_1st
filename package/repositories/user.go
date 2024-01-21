@@ -3,13 +3,33 @@ package repositories
 import (
 	"Assignment_Vivasoft/package/domain"
 	"Assignment_Vivasoft/package/models"
+	"errors"
 	"gorm.io/gorm"
+	"fmt"
 )
 
 // parent struct to implement interface binding
 type userRepo struct {
 	db *gorm.DB
 }
+
+// LoginUser implements domain.IUserRepo.
+func (repo *userRepo) LoginUser(user *models.UserDetails) error {
+	// Find the user by user_name
+	var existingUser models.UserDetails
+	if err := repo.db.Where("user_name = ?", user.UserName).First(&existingUser).Error; err != nil {
+		return err
+	}
+	
+	// Compare the stored hashed password, with the hashed version of the password that was received
+	if user.Password != existingUser.Password {
+		fmt.Println("Password is not correct")
+		return errors.New("password is not correct")
+	}
+	// Passwords match, authentication successful
+	return nil
+}
+
 
 // GetUsers implements domain.IUserRepo.
 func (repo *userRepo) GetUsers(model *gorm.Model) []models.UserDetails {
@@ -30,12 +50,26 @@ func (repo *userRepo) GetUsers(model *gorm.Model) []models.UserDetails {
 
 // CreateUser implements domain.IUserRepo.
 func (repo *userRepo) CreateUser(user *models.UserDetails) error {
-	err := repo.db.Create(user).Error
-	if err != nil {
+	userName := user.UserName
+
+	// Check if the user with the same userName already exists
+	var existingUser models.UserDetails
+	err := repo.db.Where("user_name = ?", userName).First(&existingUser).Error
+	if err == nil {
+		// User with the same userName already exists, return an error
+		return errors.New("user with the same userName already exists")
+	}
+
+	// hashedPassword
+	// user.Password = utils.HashPassword(user.Password)
+
+	err2 := repo.db.Create(user).Error
+	if err2 != nil {
 		return err
 	}
 	return nil
 }
+
 
 // DeleteUser implements domain.IUserRepo.
 func (repo *userRepo) DeleteUser(model *gorm.Model) error {
@@ -61,6 +95,3 @@ func UserDBInstance(d *gorm.DB) domain.IUserRepo {
 		db: d,
 	}
 }
-
-
-

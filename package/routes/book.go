@@ -2,6 +2,7 @@ package routes
 
 import (
 	"Assignment_Vivasoft/package/controllers"
+	"Assignment_Vivasoft/package/middlewares"
 	"net/http"
 	"github.com/labstack/echo/v4"
 )
@@ -34,7 +35,7 @@ func (bc *bookRoutes) initBookRoutes(e *echo.Echo){
 	book.GET("/ping", Pong)
 
 	// Initializing http methods of Book - routing endpoints and their handlers
-	book.POST("/book", bc.bookCtr.CreateBook)
+	book.POST("/book", bc.bookCtr.CreateBook, middlewares.Auth)
 	book.GET("/book", bc.bookCtr.GetBooks)
 	book.PUT("/book/:bookID", bc.bookCtr.UpdateBook)
 	book.DELETE("/book/:bookID", bc.bookCtr.DeleteBook)
@@ -52,6 +53,10 @@ func (bc *bookRoutes) initBookRoutes(e *echo.Echo){
 	book.GET("/user", bc.userCtr.GetUsers)
 	book.PUT("/user/:userID", bc.userCtr.UpdateUser)
 	book.DELETE("/user/:userID", bc.userCtr.DeleteUser)
+
+
+	// Log in User
+	book.POST("/login/user", bc.userCtr.LoginUser)
 	
 }
 

@@ -39,7 +39,7 @@ func (author AuthorRequest) Validate() error{
 
 // Response struct || marshalled into JSON format from struct
 type UserRequest struct{
-	UserName string `json:"user_name"`
+	UserName string `json:"user_name" gorm:"unique"`
 	Password string `json:"password"`
 	Email string `json:"email"`
 	Phone string `json:"phone,omitempty"`
@@ -59,9 +59,25 @@ func (user UserRequest) Validate() error{
 
 // Response struct || marshalled into JSON format from struct
 type UserUpdateRequest struct{
-	UserName string `json:"user_name,omitempty"`
+	UserName string `json:"user_name,omitempty" gorm:"unique"`
 	Password string `json:"password,omitempty"`
 	Email string `json:"email,omitempty"`
 	Phone string `json:"phone,omitempty"`
 	Address string `json:"address,omitempty"`
+}
+
+
+// Response struct || marshalled into JSON format from struct
+type UserLoginRequest struct{
+	UserName string `json:"user_name" gorm:"unique"`
+	Password string `json:"password"`
+}
+
+func (user UserLoginRequest) Validate() error{
+	return validate.ValidateStruct(&user,
+		validate.Field(&user.UserName, validate.Required.Error("User name is required"),
+		validate.Length(1,50)),
+		validate.Field(&user.Password, validate.Required.Error("Password is required"),
+		validate.Length(1,50)),
+	)
 }
