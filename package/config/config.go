@@ -5,6 +5,9 @@ import (
 	"github.com/spf13/viper"
 )
 
+// global var to access from any package
+var LocalConfig *Config 
+
 type Config struct{
 	DBUser string `mapstructure:"DBUSER"`
 	DBPass string `mapstructure:"DBPASS"`
@@ -32,5 +35,7 @@ func InitConfig() *Config{
 	return config
 }
 
-// global var to access from any package
-var LocalConfig *Config = InitConfig()
+// calling InitConfig() to initialize the config vars
+func SetConfig(){
+	LocalConfig = InitConfig()
+}

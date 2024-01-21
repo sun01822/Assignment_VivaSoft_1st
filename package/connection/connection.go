@@ -15,6 +15,7 @@ var DB *gorm.DB
 func Connect(){
 	dbConfig := config.LocalConfig
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbConfig.DBUser, dbConfig.DBPass, dbConfig.DBIp, dbConfig.DBName)
+	// dsn := "root:password@tcp(127.0.0.1:3306)/bookstore?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
@@ -30,6 +31,7 @@ func Connect(){
 func migrate(){
 	DB.Migrator().AutoMigrate(&models.BookDetails{})
 	DB.Migrator().AutoMigrate(&models.AuthorDetails{})
+	DB.Migrator().AutoMigrate(&models.UserDetails{})
 }
 
 // calling to connect function to initialize connection

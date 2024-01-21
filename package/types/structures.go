@@ -36,3 +36,32 @@ func (author AuthorRequest) Validate() error{
 		validate.Length(1,50)),
 	)
 }
+
+// Response struct || marshalled into JSON format from struct
+type UserRequest struct{
+	UserName string `json:"user_name"`
+	Password string `json:"password"`
+	Email string `json:"email"`
+	Phone string `json:"phone,omitempty"`
+	Address string `json:"address,omitempty"`
+}
+
+func (user UserRequest) Validate() error{
+	return validate.ValidateStruct(&user,
+		validate.Field(&user.UserName, validate.Required.Error("User name is required"),
+		validate.Length(1,50)),
+		validate.Field(&user.Password, validate.Required.Error("Password is required"),
+		validate.Length(1,50)),
+		validate.Field(&user.Email, validate.Required.Error("Email is required"),
+		validate.Length(1,50)),
+	)
+}
+
+// Response struct || marshalled into JSON format from struct
+type UserUpdateRequest struct{
+	UserName string `json:"user_name,omitempty"`
+	Password string `json:"password,omitempty"`
+	Email string `json:"email,omitempty"`
+	Phone string `json:"phone,omitempty"`
+	Address string `json:"address,omitempty"`
+}

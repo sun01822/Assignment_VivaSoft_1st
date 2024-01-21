@@ -3,6 +3,7 @@ package domain
 import (
 	"Assignment_Vivasoft/package/models"
 	"Assignment_Vivasoft/package/types"
+	"gorm.io/gorm"
 )
 
 // for database Repository operation (call from service)
@@ -38,4 +39,20 @@ type IAuthorService interface{
 	CreateAuthor(author *models.AuthorDetails) error
 	UpdateAuthor(author *models.AuthorDetails) error
 	DeleteAuthor(authorID uint) error
+}
+
+// for database Repository operation (call from service)
+type IUserRepo interface{
+	GetUsers(*gorm.Model)[]models.UserDetails
+	CreateUser(user *models.UserDetails) error
+	UpdateUser(user *models.UserDetails) error
+	DeleteUser(*gorm.Model) error
+}
+
+// for service operation (response to controller || call from controller)
+type IUserService interface{
+	GetUsers(*gorm.Model) ([]types.UserRequest, error)
+	CreateUser(user *models.UserDetails) error
+	UpdateUser(user *models.UserDetails) error
+	DeleteUser(*gorm.Model) error
 }

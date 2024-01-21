@@ -10,13 +10,15 @@ type bookRoutes struct{
 	echo *echo.Echo
 	bookCtr controllers.BookController
 	authorCtr controllers.AuthorController
+	userCtr controllers.UserController
 }
 
-func BookRoutes(e *echo.Echo, bookCtr controllers.BookController, authorCtr controllers.AuthorController) *bookRoutes {
+func BookRoutes(e *echo.Echo, bookCtr controllers.BookController, authorCtr controllers.AuthorController, userCtr controllers.UserController) *bookRoutes {
 	return &bookRoutes{
 		echo: e,
 		bookCtr: bookCtr,
 		authorCtr: authorCtr,
+		userCtr: userCtr,
 	}
 }
 
@@ -43,6 +45,13 @@ func (bc *bookRoutes) initBookRoutes(e *echo.Echo){
 	book.GET("/author", bc.authorCtr.GetAuthors)
 	book.PUT("/author/:authorID", bc.authorCtr.UpdateAuthor)
 	book.DELETE("/author/:authorID", bc.authorCtr.DeleteAuthor)
+
+
+	// Initializing http methods of User - routing endpoints and their handlers
+	book.POST("/user", bc.userCtr.CreateUser)
+	book.GET("/user", bc.userCtr.GetUsers)
+	book.PUT("/user/:userID", bc.userCtr.UpdateUser)
+	book.DELETE("/user/:userID", bc.userCtr.DeleteUser)
 	
 }
 

@@ -15,29 +15,29 @@ import (
 func Serve(e *echo.Echo){
 	
 	// config initialization
-	config.InitConfig()
+	config.SetConfig()
 
 	// Database initializations
 	db := connection.GetDB()
-	if db == nil{
-		panic("Database connection failed")
-	}
-	fmt.Println("Database connected successfully")
 
 	// Repository initializations
 	bookRepository := repositories.BookDBInstance(db)
 	authorRepository := repositories.AuthorDBInstance(db)
+	userRepository := repositories.UserDBInstance(db)
 
 	// Service initializations
 	bookService := services.BookServiceInstance(bookRepository)
 	authorService := services.AuthorServiceInstance(authorRepository)
+	userService := services.UserServiceInstance(userRepository)
+
 
 	// Controllers initialization
 	bookController := controllers.NewBookController(bookService)
 	authorController := controllers.NewAuthorController(authorService, bookService)
+	userController := controllers.NewUserController(userService)
 
 	// Route initializations
-	book := routes.BookRoutes(e, bookController, authorController)
+	book := routes.BookRoutes(e, bookController, authorController, userController)
 
 
 	book.InitBookRoutes()
