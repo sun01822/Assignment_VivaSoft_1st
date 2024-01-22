@@ -49,14 +49,14 @@ func (bc *bookRoutes) initBookRoutes(e *echo.Echo){
 
 
 	// Initializing http methods of User - routing endpoints and their handlers
-	book.POST("/user", bc.userCtr.CreateUser)
+	book.POST("/auth/singup", bc.userCtr.CreateUser)
 	book.GET("/user", bc.userCtr.GetUsers)
 	book.PUT("/user/:userID", bc.userCtr.UpdateUser)
 	book.DELETE("/user/:userID", bc.userCtr.DeleteUser)
 
 
-	// Log in User
-	book.POST("/login/user", bc.userCtr.LoginUser)
+	// sign in User
+	book.POST("/auth/signin", bc.userCtr.LoginUser)
 	
 }
 

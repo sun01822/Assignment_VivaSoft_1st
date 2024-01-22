@@ -258,12 +258,21 @@
 					"response": []
 				},
 				{
-					"name": "Create User",
+					"name": "Sign Up User",
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_name\": \"Sun\",\r\n    \"password\": \"abc123\",\r\n    \"email\": \"example3@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/bookstore/user",
+							"raw": "http://localhost:8080/bookstore/auth/singup",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -271,7 +280,8 @@
 							"port": "8080",
 							"path": [
 								"bookstore",
-								"user"
+								"auth",
+								"singup"
 							]
 						}
 					},
@@ -322,8 +332,33 @@
 				{
 					"name": "For log in user",
 					"request": {
+						"auth": {
+							"type": "bearer"
+						},
 						"method": "POST",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_name\": \"Sun\",\r\n    \"password\": \"abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/bookstore/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookstore",
+								"auth",
+								"signin"
+							]
+						}
 					},
 					"response": []
 				}
