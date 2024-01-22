@@ -154,7 +154,7 @@ func (controller *UserController) LoginUser(e echo.Context) error {
 		return e.JSON(http.StatusInternalServerError, err.Error())
 	}
 	now := time.Now().UTC()
-	ttl := time.Minute * 1
+	ttl := time.Minute * 15  // JWT token will be valid for 15 minutes
 	claims := jwt.StandardClaims{
 		ExpiresAt: now.Add(ttl).Unix(),
 		IssuedAt:  now.Unix(),
