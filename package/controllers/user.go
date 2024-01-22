@@ -166,6 +166,6 @@ func (controller *UserController) LoginUser(e echo.Context) error {
 		return e.JSON(http.StatusInternalServerError, "error generating token")
 	}
 	fmt.Println("Login successfully" + " " + requestUser.UserName + " " + "at" + " " + time.Now().String())
-	fmt.Println("Now you can Add, Update, Delete Book using the JWT for 1 minute. After 1 minute you need to relogin to get the JWT")
+	fmt.Println("Now you can Add, Update, Delete Book using the JWT for 15 minute. After 15 minute you need to relogin to get the JWT")
 	return e.JSON(http.StatusOK,token)
 }
