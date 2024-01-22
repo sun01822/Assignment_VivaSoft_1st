@@ -60,10 +60,8 @@ func (repo *userRepo) CreateUser(user *models.UserDetails) error {
 		return errors.New("user with the same userName already exists")
 	}
 
-	fmt.Println("Resuested User: ", user)
 	// hashedPassword
 	user.Password = utils.HashPassword(user.Password)
-	fmt.Println("After Hashing: ", user)
 
 	err2 := repo.db.Create(user).Error
 	if err2 != nil {
