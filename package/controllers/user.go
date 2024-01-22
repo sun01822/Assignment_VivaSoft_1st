@@ -8,10 +8,10 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
+	"Assignment_Vivasoft/package/config"
 )
 
 type IUserController interface {
@@ -139,6 +139,7 @@ func (controller *UserController) DeleteUser(e echo.Context) error {
 
 // Log in User
 func (controller *UserController) LoginUser(e echo.Context) error {
+	config := config.LocalConfig
 	requestUser := &types.UserLoginRequest{}
 	if err := e.Bind(requestUser); err != nil {
 		return e.JSON(http.StatusBadRequest, err.Error())
@@ -160,7 +161,7 @@ func (controller *UserController) LoginUser(e echo.Context) error {
 		IssuedAt:  now.Unix(),
 		NotBefore: now.Unix(),
 	}
-	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte("my-secret-key"))
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(config.JWTSecret))
 	if err != nil {
 		fmt.Println(err.Error())
 		return e.JSON(http.StatusInternalServerError, "error generating token")

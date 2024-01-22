@@ -42,10 +42,10 @@ func (bc *bookRoutes) initBookRoutes(e *echo.Echo){
 
 	
 	// Initializing http methods of Author - routing endpoints and their handlers
-	book.POST("/author", bc.authorCtr.CreateAuthor)
+	book.POST("/author", bc.authorCtr.CreateAuthor, middlewares.Auth)
 	book.GET("/author", bc.authorCtr.GetAuthors)
-	book.PUT("/author/:authorID", bc.authorCtr.UpdateAuthor)
-	book.DELETE("/author/:authorID", bc.authorCtr.DeleteAuthor)
+	book.PUT("/author/:authorID", bc.authorCtr.UpdateAuthor, middlewares.Auth)
+	book.DELETE("/author/:authorID", bc.authorCtr.DeleteAuthor, middlewares.Auth)
 
 
 	// Initializing http methods of User - routing endpoints and their handlers

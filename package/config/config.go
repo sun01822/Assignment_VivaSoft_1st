@@ -14,6 +14,7 @@ type Config struct{
 	DBIp string `mapstructure:"DBIP"`
 	DBName string `mapstructure:"DBNAME"`
 	Port string `mapstructure:"PORT"`
+	JWTSecret string `mapstructure:"JWTSECRET"`
 }
 
 // initializing config vars 

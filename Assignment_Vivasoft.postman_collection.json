@@ -12,11 +12,21 @@
 				{
 					"name": "Create Book",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDU5MzM5NDYsImlhdCI6MTcwNTkzMzA0NiwibmJmIjoxNzA1OTMzMDQ2fQ.QFl62FrwyKyjDHf8XFLMezJJkjLFv_Cxa7DUxA_0xeQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"book_name\": \"ABC\",\r\n    \"author_id\": \"1\",\r\n    \"publication\": \"New\"\r\n}",
+							"raw": "{\r\n    \"book_name\": \"Harry Porter\",\r\n    \"author_id\": 1,\r\n    \"publication\": \"Easy Publication\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

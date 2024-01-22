@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"Assignment_Vivasoft/package/config"
 )
 
 func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-
+		config:= config.LocalConfig
 		// Get the Authorization header
 		authHeader := c.Request().Header.Get("Authorization")
 		// Check if the Authorization header is provided
@@ -25,7 +26,7 @@ func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 
 		// Parse the token
 		token, err := jwt.ParseWithClaims(tokenParts[1], &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-			return []byte("my-secret-key"), nil
+			return []byte(config.JWTSecret), nil
 		})
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, "Invalid token")
