@@ -6,7 +6,6 @@ import (
 	"errors"
 	"gorm.io/gorm"
 	"Assignment_Vivasoft/package/utils"
-	"fmt"
 )
 
 // parent struct to implement interface binding
