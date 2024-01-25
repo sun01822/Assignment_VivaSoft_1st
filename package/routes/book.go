@@ -51,8 +51,8 @@ func (bc *bookRoutes) initBookRoutes(e *echo.Echo){
 	// Initializing http methods of User - routing endpoints and their handlers
 	book.POST("/auth/singup", bc.userCtr.CreateUser)
 	book.GET("/user", bc.userCtr.GetUsers)
-	book.PUT("/user/:userID", bc.userCtr.UpdateUser)
-	book.DELETE("/user/:userID", bc.userCtr.DeleteUser)
+	book.PUT("/user/:userID", bc.userCtr.UpdateUser, middlewares.Auth)
+	book.DELETE("/user/:userID", bc.userCtr.DeleteUser, middlewares.Auth)
 
 
 	// sign in User
